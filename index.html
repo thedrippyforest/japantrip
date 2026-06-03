@@ -404,6 +404,134 @@
       min-height: 100%;
     }
 
+    .highlight-block {
+      margin: 10px 0 42px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: rgba(255, 253, 247, 0.56);
+    }
+
+    .small-head {
+      margin: 0 0 22px;
+    }
+
+    .sub-section-title {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 34px);
+      color: var(--forest-dark);
+      line-height: 1.25;
+    }
+
+    .favorite-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .favorite-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.88);
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 14px 30px rgba(77, 82, 69, 0.08);
+      min-height: 300px;
+    }
+
+    .favorite-card summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .favorite-card summary::-webkit-details-marker { display: none; }
+
+    .favorite-card h3 {
+      margin: 0 0 8px;
+      color: var(--forest-dark);
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .favorite-summary-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .favorite-summary-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .official-icon {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(64, 95, 70, 0.1);
+      color: var(--forest);
+      border: 1px solid var(--line);
+      font-size: 16px;
+      line-height: 1;
+      transition: 0.2s ease;
+      flex: 0 0 auto;
+    }
+
+    .official-icon:hover {
+      background: var(--forest);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+
+    .favorite-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .favorite-detail {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 12px;
+    }
+
+    .favorite-detail strong { color: var(--forest-dark); }
+
+    .favorite-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .favorite-list li { margin: 4px 0; }
+
+    .favorite-cta {
+      margin-top: 14px;
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(143, 168, 139, 0.14);
+      color: var(--forest);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .complete-record-head {
+      margin-top: 42px;
+      margin-bottom: 18px;
+    }
+
     .journey-photo {
       min-height: 190px;
       background: linear-gradient(135deg, rgba(143,168,139,.28), rgba(217,123,67,.14)), url("https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1000&q=80") center/cover;
@@ -548,7 +676,7 @@
 
     @media (max-width: 980px) {
       .hero, .map-panel, .journal-layout { grid-template-columns: 1fr; }
-      .grid-3, .cards-grid, .journey-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-3, .cards-grid, .journey-grid, .favorite-grid { grid-template-columns: repeat(2, 1fr); }
       .prototype-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-card { min-height: 410px; }
       .nav-links {
@@ -572,7 +700,7 @@
     @media (max-width: 640px) {
       .section { padding: 52px 18px; }
       .hero { padding: 58px 18px 28px; }
-      .grid-3, .cards-grid, .journey-grid, .prototype-grid { grid-template-columns: 1fr; }
+      .grid-3, .cards-grid, .journey-grid, .favorite-grid, .prototype-grid { grid-template-columns: 1fr; }
       .timeline-item { grid-template-columns: 1fr; }
       .section-head { display: block; }
       .toolbar { display: grid; }
@@ -593,7 +721,7 @@
         <a href="#research">旅程重點</a>
         <a href="#map">行程地圖</a>
         <a href="#journey-notes">每日紀錄</a>
-        <a href="#database">大會展位</a>
+        <a href="#database">大會紀實</a>
         <a href="#prototype">帶回台灣</a>
       </div>
     </nav>
@@ -685,6 +813,23 @@
         <div>
           <h2 class="section-title">食育大會攤位紀實</h2>
           <p class="section-subtitle">在熱鬧的食育大會裡，我們特別留意那些讓人願意靠近、願意品嚐、願意動手試試看的攤位。從一口高湯、一張問答卡到一場小遊戲，看見食育如何變得親切又有記憶點。</p>
+        </div>
+      </div>
+
+      <div class="highlight-block">
+        <div class="section-head small-head">
+          <div>
+            <h3 class="sub-section-title">亮點攤位</h3>
+            <p class="section-subtitle">這些是我特別想深入觀察的攤位。它們用故事、遊戲、繪本、教材、角色或生活情境，讓食物不只是知識，而是孩子和家庭都想靠近的經驗。</p>
+          </div>
+        </div>
+        <div class="favorite-grid" id="favoriteBoothGrid"></div>
+      </div>
+
+      <div class="section-head small-head complete-record-head">
+        <div>
+          <h3 class="sub-section-title">全部攤位紀錄</h3>
+          <p class="section-subtitle">這裡慢慢收集大會現場的攤位觀察，包含互動方式、亮點設計，以及可以帶回台灣的靈感。</p>
         </div>
       </div>
 
@@ -887,6 +1032,130 @@
       }
     ];
 
+
+    const FAVORITE_BOOTHS = [
+      {
+        no: "A8",
+        official: "https://nippon-food-shift.maff.go.jp/",
+        name: "農林水產省｜NIPPON FOOD SHIFT",
+        tag: "公共倡議／食農轉譯",
+        summary: "從食物的角度重新思考日本，把農業、地方、生活與未來放在同一張餐桌上。",
+        why: "它把政策型內容轉成更年輕、更有視覺記憶點的語言，不只是推廣食物，而是在邀請大家一起重新理解食與農。",
+        points: ["觀察官方如何把食農議題說得親切", "看栃木縣飲食文化如何被包裝成地方魅力", "思考台灣味如何成為公共倡議"],
+        taiwan: "Hey Taiwan！從一口飯認識台灣：用米、醬油、辦桌、節氣食材說出台灣生活。"
+      },
+      {
+        no: "A13",
+        official: "https://www.meiji.co.jp/meiji-shokuiku/",
+        name: "栃木明治乳業｜明治の食育",
+        tag: "企業教材／牛奶食育",
+        summary: "把牛奶、營養與生活知識做成分齡教材，讓企業不只是銷售產品，也成為教育資源。",
+        why: "它讓我想觀察企業如何長期投入食育，並把品牌信任感建立在免費教材、講座與生活知識上。",
+        points: ["年齡分眾清楚", "教材與師資資源完整", "牛奶從產品變成生活學習入口"],
+        taiwan: "可轉成牛奶、米、蛋等在地食材的月曆式親子任務。"
+      },
+      {
+        no: "C2",
+        official: "https://agribatonproject.studio.site/",
+        name: "AGRI BATON PROJECT",
+        tag: "農業職業品牌／繪本",
+        summary: "用蔬菜蠟筆、圖書朗讀與繪本，讓孩子先喜歡農業，再慢慢理解食物的重要。",
+        why: "它不是在賣繪本或蠟筆而已，而是把農業的未來交棒給下一代，這個概念非常有力量。",
+        points: ["用美感改變農業第一印象", "將農業工作者變成故事主角", "用繪本、活動、教材串起孩子與土地"],
+        taiwan: "可發展台灣小農繪本、食材角色與孩子版職人故事。"
+      },
+      {
+        no: "B12",
+        official: "https://milk-tochigi.jp/",
+        name: "栃木縣牛乳普及協會",
+        tag: "地方乳業／月曆內容",
+        summary: "用牛奶見聞錄、食譜、繪畫與小知識，把地方牛奶變成日常中可以持續認識的題材。",
+        why: "它讓地方農產品不只停在賣場，而是變成每個月都能和大眾互動的內容 IP。",
+        points: ["地方乳業共同推廣", "每月小知識形成穩定接觸", "牛奶料理與活動結合"],
+        taiwan: "可轉成台灣食材月曆：每月一個食材、一道料理、一個親子小任務。"
+      },
+      {
+        no: "B13",
+        official: "https://www.pref.tochigi.lg.jp/c07/life/jyosei/jyosei/tomokaji.html",
+        name: "栃木縣生活文化體育部｜人權性別平等科",
+        tag: "家務分工／家庭食育",
+        summary: "從家務分擔與自己煮飯切入，讓食育不只談營養，也談家庭裡誰一起照顧生活。",
+        why: "這個角度很接近滴滴兒森想關心的家庭生活。孩子的餐桌教育，也包含大人如何分工與一起生活。",
+        points: ["料理連結性別平等", "食育延伸到家庭分工", "把家事包裝成輕鬆行動"],
+        taiwan: "可設計「今天我也是餐桌小隊員」家庭任務卡。"
+      },
+      {
+        no: "D3",
+        official: "https://ns-plus.co.jp/vegebouquet/",
+        name: "N’s Plus｜蔬菜花束 × 蔬菜創糸",
+        tag: "五感體驗／蔬菜美學",
+        summary: "先讓蔬菜變漂亮、變成禮物、變成可以觸摸與欣賞的體驗，再讓孩子重新靠近蔬菜。",
+        why: "它不是先叫孩子吃蔬菜，而是先讓人喜歡蔬菜。這正是生活美學食育很迷人的地方。",
+        points: ["蔬菜花束打開視覺吸引力", "五感體驗降低距離感", "把農產品變成禮物與體驗"],
+        taiwan: "可發展市場花束任務、節氣蔬果花束與餐桌花藝食育。"
+      },
+      {
+        no: "C12",
+        official: "https://mogumogu-town.jp/",
+        name: "Mogumogu Town｜大塚製藥",
+        tag: "AR遊戲／食材角色",
+        summary: "用 AR 讓餐點裡的食材角色出現，透過收集、問答與城鎮養成學習營養。",
+        why: "它把營養分類和食材知識變成孩子願意玩的遊戲，讓數位工具不只是螢幕，而是連回餐桌。",
+        points: ["拍餐點觸發食材角色", "用收集機制增加持續參與", "營養知識變成遊戲規則"],
+        taiwan: "可轉成食材小精靈圖鑑，先做紙本任務卡，再慢慢延伸數位互動。"
+      },
+      {
+        no: "E2",
+        official: "https://www.kagome.co.jp/",
+        name: "KAGOME｜每天吃 350g 蔬菜",
+        tag: "蔬菜推廣／健康行動",
+        summary: "把蔬菜攝取變成可以理解、可以測量、也可以在日常中被提醒的小目標。",
+        why: "它很會把健康目標說得簡單，讓「多吃蔬菜」不只是口號，而是具體行動。",
+        points: ["350g 蔬菜目標清楚", "健康議題轉成日常提醒", "大品牌資源可支持校園合作"],
+        taiwan: "可設計「今天我吃到幾種綠？」家庭蔬菜挑戰。"
+      },
+      {
+        no: "F15",
+        official: "https://www.gakkyu.or.jp/",
+        name: "學校給食研究改善協會",
+        tag: "學校午餐／校園食育",
+        summary: "把學校午餐視為食育入口，串起營養教師、食譜、教材與孩子每天都會遇見的一餐。",
+        why: "午餐不是單純供餐，而是每天發生的生活教育。這對未來校園食育模組很有參考價值。",
+        points: ["學校、家庭、社區一起合作", "午餐食譜可變成教學資源", "營養教師成為食育推手"],
+        taiwan: "可發展台灣午餐故事卡，讓孩子從便當與營養午餐認識產地。"
+      },
+      {
+        no: "I5",
+        official: "https://www.educe-shokuiku.jp/",
+        name: "日本 educe 食育總合研究所",
+        tag: "午餐大師／成人培訓",
+        summary: "用比賽、研修與教材讓學校午餐工作者被看見，也讓成人端更願意投入食育。",
+        why: "它提醒我，食育不只需要孩子喜歡，也需要老師、營養師與工作人員被支持。",
+        points: ["把午餐專業舞台化", "提供幼兒園與學校可實踐課程", "成人培訓是食育擴散關鍵"],
+        taiwan: "可作為滴滴兒森未來食育工作坊培訓與講師教材的參考。"
+      },
+      {
+        no: "K8／K9",
+        official: "https://www.meito.jp/",
+        name: "Mate／Mate World",
+        tag: "保育教材／食育小誌",
+        summary: "用月刊、繪本、保育圖書與食育情報誌，支持孩子享受用餐時光。",
+        why: "它很適合觀察日本如何把保育現場需要的內容，做成可長期使用、可訂閱的教材。",
+        points: ["內容形式接近兒森小誌", "插圖、食譜、活動指引可整合", "適合保育者與家庭閱讀"],
+        taiwan: "可轉成《兒森生活食育小誌》或季節型親子食育包。"
+      },
+      {
+        no: "F5",
+        official: "https://kids-kitchen.jp/",
+        name: "兒童廚房協會｜Kids Kitchen",
+        tag: "真實料理／幼兒食育",
+        summary: "讓孩子自己切、自己做、自己嘗試，從真實料理裡獲得對食物與生活的感覺。",
+        why: "它不是把料理變美勞，而是讓孩子真的參與生活。這一點非常適合滴滴兒森的課程精神。",
+        points: ["孩子親手操作", "五感與真實食材並重", "料理是生活能力，不只是活動成果"],
+        taiwan: "可發展「孩子自己的小廚房」系列，從安全刀具、豆類、米食與簡單料理開始。"
+      }
+    ];
+
     const FALLBACK_DATA = [
       {
         booth_no: "F11",
@@ -953,6 +1222,7 @@
     const navLinks = document.getElementById("navLinks");
     const itineraryList = document.getElementById("itineraryList");
     const journeyGrid = document.getElementById("journeyGrid");
+    const favoriteBoothGrid = document.getElementById("favoriteBoothGrid");
 
     let records = [];
 
@@ -976,6 +1246,38 @@
             </div>
           </div>
         </article>
+      `).join("");
+    }
+
+
+    function renderFavoriteBooths() {
+      if (!favoriteBoothGrid) return;
+      favoriteBoothGrid.innerHTML = FAVORITE_BOOTHS.map((item, index) => `
+        <details class="favorite-card">
+          <summary>
+            <div class="favorite-summary-top">
+              <span class="tag ${tagClass(item.tag)}">${escapeHTML(item.tag)}</span>
+              <div class="favorite-summary-meta">
+                <span class="meta">${escapeHTML(item.no)}</span>
+                ${item.official ? `<a class="official-icon" href="${escapeAttribute(item.official)}" target="_blank" rel="noopener noreferrer" title="打開官方網站" aria-label="打開 ${escapeAttribute(item.name)} 官方網站" onclick="event.stopPropagation();">↗</a>` : ""}
+              </div>
+            </div>
+            <h3>${escapeHTML(item.name)}</h3>
+            <p>${escapeHTML(item.summary)}</p>
+            <span class="favorite-cta">打開亮點</span>
+          </summary>
+          <div class="favorite-detail">
+            <p><strong>為什麼吸引我：</strong>${escapeHTML(item.why)}</p>
+            <div>
+              <strong>我想觀察：</strong>
+              <ul class="favorite-list">
+                ${item.points.map((point) => `<li>${escapeHTML(point)}</li>`).join("")}
+              </ul>
+            </div>
+            <p><strong>滴滴兒森可以帶回台灣的是：</strong>${escapeHTML(item.taiwan)}</p>
+            ${item.official ? `<a class="mini-link" href="${escapeAttribute(item.official)}" target="_blank" rel="noopener noreferrer">↗ 官方網站</a>` : ""}
+          </div>
+        </details>
       `).join("");
     }
 
@@ -1203,6 +1505,7 @@
     sampleButton.addEventListener("click", restoreSampleData);
 
     renderItinerary();
+    renderFavoriteBooths();
     renderJourneyNotes(JOURNEY_NOTES);
     records = FALLBACK_DATA;
     renderCards();
