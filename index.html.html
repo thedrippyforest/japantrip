@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>滴滴兒森｜Hey Taiwan！孩子生活食育提案</title>
+  <meta name="description" content="跟著滴滴兒森走進日本食育現場，把旅途中看見的食材故事、展位設計與生活靈感，慢慢轉成台灣家庭也能靠近的食育提案。" />
+
+  <!--
+    字體使用說明：
+    1. 請將 JS 金萱那提字體轉成 woff2，放在 /fonts/ 資料夾。
+    2. 檔名可命名為 JSJinXuanLatte.woff2。
+    3. 若尚未放入字體，網站會先使用 Noto Sans TC / 系統字體替代。
+  -->
+  <style>
+    @font-face {
+      font-family: "JS JinXuan Latte";
+      src: url("./fonts/JSJinXuanLatte.woff2") format("woff2");
+      font-weight: 400 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --forest: #405f46;
+      --forest-dark: #263b2b;
+      --sage: #8fa88b;
+      --sage-light: #dbe6d2;
+      --cream: #fff9ed;
+      --oat: #f5ead8;
+      --paper: #fffdf7;
+      --sweet-potato: #d97b43;
+      --egg: #f1be57;
+      --tea: #b48a62;
+      --sky: #8fb9c7;
+      --ink: #2f342f;
+      --muted: #6f766d;
+      --line: rgba(64, 95, 70, 0.18);
+      --shadow: 0 18px 40px rgba(77, 82, 69, 0.12);
+      --radius-lg: 30px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "JS JinXuan Latte", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(241, 190, 87, 0.24), transparent 28%),
+        radial-gradient(circle at 84% 12%, rgba(143, 185, 199, 0.22), transparent 25%),
+        linear-gradient(180deg, var(--cream), #fffdf8 42%, #f8f1e6);
+      line-height: 1.75;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 249, 237, 0.84);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 13px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: var(--forest-dark);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.68);
+      padding: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--forest-dark);
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover { background: rgba(143, 168, 139, 0.16); }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--forest);
+      font: inherit;
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 82px 22px 38px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 247, 0.7);
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(38px, 7vw, 74px);
+      line-height: 1.08;
+      letter-spacing: 0.02em;
+      color: var(--forest-dark);
+    }
+
+    .hero h1 span { display: block; color: var(--sweet-potato); }
+
+    .hero-text {
+      margin: 22px 0 0;
+      max-width: 680px;
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn, .mini-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: 0.22s ease;
+    }
+
+    .btn {
+      min-height: 46px;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: var(--forest);
+      box-shadow: 0 12px 22px rgba(64, 95, 70, 0.22);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); background: var(--forest-dark); }
+
+    .btn-secondary {
+      color: var(--forest-dark);
+      background: rgba(255, 253, 247, 0.72);
+      border-color: var(--line);
+    }
+
+    .btn-secondary:hover { background: var(--sage-light); transform: translateY(-2px); }
+
+    .hero-card {
+      position: relative;
+      min-height: 470px;
+      border-radius: 42px;
+      overflow: hidden;
+      background:
+        linear-gradient(155deg, rgba(143, 168, 139, 0.86), rgba(255, 249, 237, 0.9)),
+        url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80") center/cover;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.52);
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(255,255,255,0.56);
+      border-radius: 34px;
+      pointer-events: none;
+    }
+
+    .floating-note {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 28px;
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(255, 253, 247, 0.9);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 16px 34px rgba(37, 49, 38, 0.12);
+    }
+
+    .floating-note strong {
+      display: block;
+      font-size: 21px;
+      color: var(--forest-dark);
+      margin-bottom: 8px;
+    }
+
+    .floating-note p { margin: 0; color: var(--muted); }
+
+    .section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 68px 22px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.2;
+      color: var(--forest-dark);
+    }
+
+    .section-subtitle {
+      margin: 10px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.76);
+      color: var(--forest-dark);
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .grid-3, .cards-grid, .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .theme-card, .prototype-card, .data-card, .timeline-item, .journey-card, .journal-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.84);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 14px 30px rgba(77, 82, 69, 0.08);
+    }
+
+    .theme-card, .prototype-card, .data-card { padding: 22px; }
+
+    .theme-card h3, .prototype-card h3, .data-card h3, .journey-card h3 {
+      margin: 0 0 10px;
+      color: var(--forest-dark);
+      font-size: 21px;
+      line-height: 1.35;
+    }
+
+    .theme-card p, .prototype-card p, .data-card p, .journey-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .icon-bubble {
+      width: 54px;
+      height: 54px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      background: var(--sage-light);
+      margin-bottom: 18px;
+    }
+
+    .map-panel {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .map-placeholder {
+      min-height: 540px;
+      border-radius: 34px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(64, 95, 70, 0.08), rgba(217, 123, 67, 0.09)),
+        url("https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1400&q=80") center/cover;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .map-label {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255, 253, 247, 0.9);
+      backdrop-filter: blur(14px);
+    }
+
+    .map-label strong { color: var(--forest-dark); font-size: 20px; }
+    .map-label p { margin: 6px 0 0; color: var(--muted); }
+
+    .timeline { display: grid; gap: 14px; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 15px;
+      padding: 17px;
+      border-radius: 24px;
+      transition: 0.2s ease;
+    }
+
+    .timeline-item:hover { transform: translateY(-2px); }
+
+    .date-badge {
+      width: 72px;
+      height: 72px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--oat);
+      color: var(--forest-dark);
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .timeline-item h3 { margin: 0 0 4px; color: var(--forest-dark); font-size: 18px; }
+    .timeline-item p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+
+    .place-links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .map-link, .mini-link {
+      font-size: 13px;
+      color: var(--forest);
+      padding: 7px 10px;
+      background: rgba(143, 168, 139, 0.14);
+    }
+
+    .map-link:hover, .mini-link:hover { background: var(--sage-light); }
+
+    .journey-card {
+      overflow: hidden;
+      min-height: 100%;
+    }
+
+    .highlight-block {
+      margin: 10px 0 42px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: rgba(255, 253, 247, 0.56);
+    }
+
+    .small-head {
+      margin: 0 0 22px;
+    }
+
+    .sub-section-title {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 34px);
+      color: var(--forest-dark);
+      line-height: 1.25;
+    }
+
+    .favorite-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .favorite-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.88);
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 14px 30px rgba(77, 82, 69, 0.08);
+      min-height: 300px;
+    }
+
+    .favorite-card summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .favorite-card summary::-webkit-details-marker { display: none; }
+
+    .favorite-card h3 {
+      margin: 0 0 8px;
+      color: var(--forest-dark);
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .favorite-summary-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .favorite-summary-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .official-icon {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(64, 95, 70, 0.1);
+      color: var(--forest);
+      border: 1px solid var(--line);
+      font-size: 16px;
+      line-height: 1;
+      transition: 0.2s ease;
+      flex: 0 0 auto;
+    }
+
+    .official-icon:hover {
+      background: var(--forest);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+
+    .favorite-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .favorite-detail {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 12px;
+    }
+
+    .favorite-detail strong { color: var(--forest-dark); }
+
+    .favorite-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .favorite-list li { margin: 4px 0; }
+
+    .favorite-cta {
+      margin-top: 14px;
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(143, 168, 139, 0.14);
+      color: var(--forest);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .complete-record-head {
+      margin-top: 42px;
+      margin-bottom: 18px;
+    }
+
+    .journey-photo {
+      min-height: 190px;
+      background: linear-gradient(135deg, rgba(143,168,139,.28), rgba(217,123,67,.14)), url("https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1000&q=80") center/cover;
+    }
+
+    .journey-content { padding: 20px; }
+    .journey-meta { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 18px 0 22px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 253, 247, 0.74);
+    }
+
+    .search-input, .select-input {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 15px;
+      background: #fffdf8;
+      font: inherit;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .search-input { min-width: 260px; flex: 1; }
+    .select-input { min-width: 170px; }
+
+    .data-card {
+      border-radius: 26px;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--sage-light);
+      color: var(--forest-dark);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tag.orange { background: rgba(217, 123, 67, 0.16); color: #8b4a24; }
+    .tag.blue { background: rgba(143, 185, 199, 0.22); color: #315b68; }
+    .tag.yellow { background: rgba(241, 190, 87, 0.22); color: #7c5b14; }
+
+    .data-card h3 { font-size: 19px; }
+    .data-card .meta { color: var(--muted); font-size: 13px; }
+    .data-card .idea { color: var(--forest-dark); font-weight: 700; }
+
+    .card-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .prototype-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .prototype-card { border-radius: 24px; }
+    .prototype-card h3 { font-size: 18px; }
+
+    .journal-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .journal-card { border-radius: 34px; overflow: hidden; background: var(--paper); }
+
+    .journal-image {
+      min-height: 250px;
+      background: linear-gradient(135deg, rgba(143, 168, 139, 0.28), rgba(217, 123, 67, 0.18)), url("https://images.unsplash.com/photo-1517840901100-8179e982acb7?auto=format&fit=crop&w=1200&q=80") center/cover;
+    }
+
+    .journal-card:nth-child(2) .journal-image {
+      background: linear-gradient(135deg, rgba(143, 185, 199, 0.22), rgba(241, 190, 87, 0.18)), url("https://images.unsplash.com/photo-1514986888952-8cd320577b68?auto=format&fit=crop&w=1200&q=80") center/cover;
+    }
+
+    .journal-content { padding: 24px; }
+    .journal-content h3 { margin: 0 0 10px; color: var(--forest-dark); font-size: 23px; }
+    .journal-content p { margin: 0; color: var(--muted); }
+
+    .cta { max-width: var(--max); margin: 36px auto 82px; padding: 0 22px; }
+
+    .cta-box {
+      border-radius: 42px;
+      padding: 42px;
+      background: linear-gradient(135deg, var(--forest), #6d8b63);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 42px); }
+    .cta-box p { margin: 0; opacity: 0.9; max-width: 760px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: rgba(255, 249, 237, 0.68);
+      padding: 30px 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .loading, .empty {
+      grid-column: 1 / -1;
+      padding: 28px;
+      border: 1px dashed var(--line);
+      border-radius: 26px;
+      background: rgba(255, 253, 247, 0.72);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .map-panel, .journal-layout { grid-template-columns: 1fr; }
+      .grid-3, .cards-grid, .journey-grid, .favorite-grid { grid-template-columns: repeat(2, 1fr); }
+      .prototype-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-card { min-height: 410px; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: 66px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255, 253, 247, 0.96);
+        box-shadow: var(--shadow);
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: inline-flex; }
+    }
+
+    @media (max-width: 640px) {
+      .section { padding: 52px 18px; }
+      .hero { padding: 58px 18px 28px; }
+      .grid-3, .cards-grid, .journey-grid, .favorite-grid, .prototype-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .toolbar { display: grid; }
+      .search-input, .select-input { min-width: 100%; width: 100%; }
+      .hero-actions { align-items: stretch; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="#top" aria-label="回到首頁">
+        <span>滴滴兒森｜the Drippy Forest</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" type="button">選單</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#research">旅程重點</a>
+        <a href="#map">行程地圖</a>
+        <a href="#journey-notes">每日紀錄</a>
+        <a href="#database">大會紀實</a>
+        <a href="#prototype">帶回台灣</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">🌿 日本食育見學 × 台灣生活靈感</div>
+        <h1>Hey Taiwan！<span>孩子生活食育提案</span></h1>
+        <p class="hero-text">
+          這是一趟從日本食育現場出發的小旅行。沿路收集食材故事、展位巧思、農場體驗與孩子會喜歡的學習方式，
+          再慢慢帶回台灣，長成更貼近日常的親子食育提案。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#map">看這次走訪路線</a>
+          <a class="btn btn-secondary" href="#journey-notes">看每日紀錄</a>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="食育見學意象圖">
+        <div class="floating-note">
+          <strong>把看見的美好，帶回餐桌</strong>
+          <p>從一本書、一口湯、一顆蛋、一條地瓜開始，記下日本食育如何把土地、文化與孩子的生活連在一起。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="research">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">這趟旅程，我們想看見什麼？</h2>
+          <p class="section-subtitle">沿著書店、農場、博物館與展會一路前進，我們想收集那些讓人眼睛一亮的小細節：一個孩子願意停下來的遊戲、一段讓食材變親近的故事、一種能帶回餐桌的溫柔方法。</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill">食材故事</span>
+          <span class="pill">親子體驗</span>
+          <span class="pill">生活美感</span>
+        </div>
+      </div>
+      <div class="grid-3">
+        <article class="theme-card">
+          <div class="icon-bubble">🍠</div>
+          <h3>食材怎麼變成故事</h3>
+          <p>觀察地瓜、雞蛋、牛奶、醬油、昆布與茶，如何透過包裝、文字、試吃與角色設計，變成讓人想靠近的地方風景。</p>
+        </article>
+        <article class="theme-card">
+          <div class="icon-bubble">🎒</div>
+          <h3>孩子怎麼自然參與</h3>
+          <p>記錄問答、蓋章、闖關、手冊、手作與小挑戰，看看哪些方式可以讓食育變成「玩著玩著就懂了」。</p>
+        </article>
+        <article class="theme-card">
+          <div class="icon-bubble">🍚</div>
+          <h3>家庭怎麼帶回日常</h3>
+          <p>尋找可以帶回家的任務、食譜、卡片、採買靈感與餐桌對話，讓食育不只停在活動現場。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="map">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">每日行程地圖</h2>
+          <p class="section-subtitle">從東京出發，走進栃木、茨城與千葉的食農現場。每一個停靠點，都是一枚小小種子，記錄著日本如何把土地、食材與人的生活重新連在一起。</p>
+        </div>
+      </div>
+      <div class="map-panel">
+        <div class="map-placeholder">
+          <div class="map-label">
+            <strong>從東京到栃木、茨城與千葉</strong>
+            <p>一路看書店、博物館、食育大會、農場、地瓜學校與食農泊，把旅程中的小靈感慢慢收進滴滴兒森的資料庫。</p>
+          </div>
+        </div>
+        <div class="timeline" id="itineraryList"></div>
+      </div>
+    </section>
+
+    <section class="section" id="journey-notes">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">每日見學紀錄</h2>
+          <p class="section-subtitle">每天留下一點現場的氣味：書架上的食農繪本、農場裡的風、直販所的蔬果顏色、餐桌上的一口驚喜。這些片段會慢慢拼成滴滴兒森帶回台灣的靈感地圖。</p>
+        </div>
+      </div>
+      <div class="journey-grid" id="journeyGrid"></div>
+    </section>
+
+    <section class="section" id="database">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">食育大會攤位紀實</h2>
+          <p class="section-subtitle">在熱鬧的食育大會裡，我們特別留意那些讓人願意靠近、願意品嚐、願意動手試試看的攤位。從一口高湯、一張問答卡到一場小遊戲，看見食育如何變得親切又有記憶點。</p>
+        </div>
+      </div>
+
+      <div class="highlight-block">
+        <div class="section-head small-head">
+          <div>
+            <h3 class="sub-section-title">亮點攤位</h3>
+            <p class="section-subtitle">這些是我特別想深入觀察的攤位。它們用故事、遊戲、繪本、教材、角色或生活情境，讓食物不只是知識，而是孩子和家庭都想靠近的經驗。</p>
+          </div>
+        </div>
+        <div class="favorite-grid" id="favoriteBoothGrid"></div>
+      </div>
+
+      <div class="section-head small-head complete-record-head">
+        <div>
+          <h3 class="sub-section-title">全部攤位紀錄</h3>
+          <p class="section-subtitle">這裡慢慢收集大會現場的攤位觀察，包含互動方式、亮點設計，以及可以帶回台灣的靈感。</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn btn-primary" id="loadSheetButton" type="button">載入最新紀錄</button>
+        <button class="btn btn-secondary" id="sampleButton" type="button">恢復示範資料</button>
+        <input id="searchInput" class="search-input" type="search" placeholder="搜尋展位、食材、互動方式，例如：醬油、昆布、問答、兒童..." />
+        <select id="typeFilter" class="select-input">
+          <option value="全部">全部主題</option>
+          <option value="飲食文化">飲食文化</option>
+          <option value="兒童食育">兒童食育</option>
+          <option value="校園食育">校園食育</option>
+          <option value="永續減廢">永續減廢</option>
+          <option value="食材品牌">食材品牌</option>
+          <option value="五感體驗">五感體驗</option>
+        </select>
+      </div>
+
+      <div class="cards-grid" id="cardsGrid">
+        <div class="loading">正在整理森林裡的小種子資料...</div>
+      </div>
+    </section>
+
+    <section class="section" id="prototype">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">帶回台灣後，想長成的樣子</h2>
+          <p class="section-subtitle">旅途中收下的靈感，會在回到台灣後慢慢發芽。也許變成一堂課、一張任務卡、一本繪本，或是一場讓孩子重新認識餐桌的親子小旅行。</p>
+        </div>
+      </div>
+      <div class="prototype-grid">
+        <article class="prototype-card">
+          <div class="icon-bubble">📦</div>
+          <h3>食育小包</h3>
+          <p>給學校、親子館與共學家庭使用的低門檻體驗材料。</p>
+        </article>
+        <article class="prototype-card">
+          <div class="icon-bubble">🦉</div>
+          <h3>親子工作坊</h3>
+          <p>用台灣特有種、地方食材與餐桌任務設計一場小旅行。</p>
+        </article>
+        <article class="prototype-card">
+          <div class="icon-bubble">🎭</div>
+          <h3>故事型活動</h3>
+          <p>把食材變成角色，把地景變成孩子走得進去的故事。</p>
+        </article>
+        <article class="prototype-card">
+          <div class="icon-bubble">📚</div>
+          <h3>台灣味繪本</h3>
+          <p>用溫柔畫面記下土地、職人、食材與家庭記憶。</p>
+        </article>
+        <article class="prototype-card">
+          <div class="icon-bubble">🎲</div>
+          <h3>任務卡／桌遊</h3>
+          <p>讓食材溯源、永續選擇與採買觀察變成可重複玩的遊戲。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="cta-box">
+        <h2>讓旅途中看見的一口美好，回到台灣繼續發芽。</h2>
+        <p>這裡會慢慢收集日本食育現場的觀察，也會記下滴滴兒森如何把它們轉成台灣家庭能感受、能參與、能帶回日常的生活提案。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© Hey Taiwan！孩子生活食育提案｜滴滴兒森 The Drippy Forest</div>
+      <div>#放大生活中的美好</div>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================
+    // Google Sheet 串接設定
+    // 公開頁面不放表單與後台連結，只讀取已發布的 CSV 資料。
+    // CSV 欄位建議：timestamp, booth_no, booth_name, theme, interaction, highlight, taiwan_idea, photo_url, link
+    // =========================================================
+
+    const SPREADSHEET_ID = "189eMmdngt401K0sCunUoc3WozyQEwivLyh80_ETb_WI";
+    const BOOTH_SHEET_NAME = "大會攤位";
+    const JOURNEY_SHEET_NAME = "每日見學紀錄";
+
+    const ITINERARY = [
+      {
+        date: "6/4",
+        day: "DAY1",
+        title: "農文協書店／MOA 自然農法餐廳",
+        desc: "從食農書籍、兒童繪本與自然農法料理，打開這趟旅程的第一頁。",
+        places: [
+          { name: "農文協 Bookstore", map: "https://www.google.com/maps/search/?api=1&query=%E8%BE%B2%E6%96%87%E5%8D%94%20Bookstore%20%E7%A5%9E%E4%BF%9D%E7%94%BA" },
+          { name: "Green market MOA 高輪", map: "https://www.google.com/maps/search/?api=1&query=Green%20market%20MOA%20%E9%AB%98%E8%BC%AA" }
+        ]
+      },
+      {
+        date: "6/5",
+        day: "DAY2",
+        title: "雨風太陽／東京農大食農博物館／農產直販所",
+        desc: "看見生產者與消費者如何被重新連起來，也觀察博物館如何把食農知識變得好懂。",
+        places: [
+          { name: "雨風太陽 東京辦事處", map: "https://www.google.com/maps/search/?api=1&query=%E9%9B%A8%E9%A2%A8%E5%A4%AA%E9%99%BD%20%E6%9D%B1%E4%BA%AC%E8%BE%A6%E4%BA%8B%E8%99%95" },
+          { name: "東京農業大學 食農博物館", map: "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E8%BE%B2%E6%A5%AD%E5%A4%A7%E5%AD%B8%20%E9%A3%9F%E3%81%A8%E8%BE%B2%E3%81%AE%E5%8D%9A%E7%89%A9%E9%A4%A8" },
+          { name: "農産直売所 あぜみち 鹿沼店", map: "https://www.google.com/maps/search/?api=1&query=%E8%BE%B2%E7%94%A3%E7%9B%B4%E5%A3%B2%E6%89%80%20%E3%81%82%E3%81%9C%E3%81%BF%E3%81%A1%20%E9%B9%BF%E6%B2%BC%E5%BA%97" }
+        ]
+      },
+      {
+        date: "6/6",
+        day: "DAY3",
+        title: "第21回食育推進全國大會 in 栃木",
+        desc: "集中觀察飲食文化、兒童食育、五感體驗、教具與家庭任務設計。",
+        places: [
+          { name: "栃木縣廳周邊／大會會場", map: "https://www.google.com/maps/search/?api=1&query=%E3%80%92320-8686%20%E6%A0%83%E6%9C%A8%E7%9C%8C%E5%AE%87%E9%83%BD%E5%AE%AE%E5%B8%82%E6%98%AD%E5%92%8C1-8-11" }
+        ]
+      },
+      {
+        date: "6/7",
+        day: "DAY4",
+        title: "森林ノ牧場／明治の森・黒磯／長谷川農場",
+        desc: "走進酪農、森林、直販所與循環型農業，觀察 Farm to Table 如何變成真實體驗。",
+        places: [
+          { name: "森林ノ牧場", map: "https://www.google.com/maps/search/?api=1&query=%E6%A3%AE%E6%9E%97%E3%83%8E%E7%89%A7%E5%A0%B4" },
+          { name: "道の駅 明治の森・黒磯", map: "https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%AE%E9%A7%85%20%E6%98%8E%E6%B2%BB%E3%81%AE%E6%A3%AE%E3%83%BB%E9%BB%92%E7%A3%AF" },
+          { name: "長谷川農場", map: "https://www.google.com/maps/search/?api=1&query=%E9%95%B7%E8%B0%B7%E5%B7%9D%E8%BE%B2%E5%A0%B4%20%E6%A0%83%E6%9C%A8" },
+          { name: "道の駅 みかも", map: "https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%AE%E9%A7%85%20%E3%81%BF%E3%81%8B%E3%82%82" }
+        ]
+      },
+      {
+        date: "6/8",
+        day: "DAY5",
+        title: "道の駅ましこ／薄羽養雞場／地瓜學校",
+        desc: "從地方直販、雞蛋品牌化到廢校重生，看食材如何長成完整故事。",
+        places: [
+          { name: "道の駅 ましこ", map: "https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%AE%E9%A7%85%20%E3%81%BE%E3%81%97%E3%81%93" },
+          { name: "薄羽養鶏場", map: "https://www.google.com/maps/search/?api=1&query=%E8%96%84%E7%BE%BD%E9%A4%8A%E9%B6%8F%E5%A0%B4" },
+          { name: "らぽっぽ なめがたファーマーズヴィレッジ", map: "https://www.google.com/maps/search/?api=1&query=%E3%82%89%E3%81%BD%E3%81%A3%E3%81%BD%20%E3%81%AA%E3%82%81%E3%81%8C%E3%81%9F%E3%83%95%E3%82%A1%E3%83%BC%E3%83%9E%E3%83%BC%E3%82%BA%E3%83%B4%E3%82%A3%E3%83%AC%E3%83%83%E3%82%B8" }
+        ]
+      },
+      {
+        date: "6/9",
+        day: "DAY6",
+        title: "THE FARM／道之驛 多古館",
+        desc: "最後一站看成熟的食農泊模式，整理農園、住宿、遊樂與飲食如何整合。",
+        places: [
+          { name: "THE FARM", map: "https://www.google.com/maps/search/?api=1&query=THE%20FARM%20Chiba%20Katori" },
+          { name: "道の駅 多古 あじさい館", map: "https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%AE%E9%A7%85%20%E5%A4%9A%E5%8F%A4%20%E3%81%82%E3%81%98%E3%81%95%E3%81%84%E9%A4%A8" }
+        ]
+      }
+    ];
+
+    const JOURNEY_NOTES = [
+      {
+        date: "6/4",
+        title: "食農書店與自然農法餐桌",
+        category: "書店／餐桌",
+        image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1000&q=80",
+        note: "想看日本如何把食農知識變成孩子與大人都想翻開的書，以及自然農法如何被端上餐桌。",
+        idea: "可轉成滴滴兒森的食育書單、節氣小卡與親子共讀提案。"
+      },
+      {
+        date: "6/5",
+        title: "產地連結與食農博物館",
+        category: "品牌／展示",
+        image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1000&q=80",
+        note: "觀察消費者如何從買產品，變成支持一位生產者；也看博物館如何把知識變得有溫度。",
+        idea: "可轉成台灣小農故事卡、親子展覽式教案。"
+      },
+      {
+        date: "6/6",
+        title: "食育推進全國大會",
+        category: "大會／展位",
+        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
+        note: "集中記錄飲食文化、試吃、問答、卡牌、手作、闖關與可帶回家的小設計。",
+        idea: "可整理成台灣食育展位設計資料庫。"
+      },
+      {
+        date: "6/7",
+        title: "森林裡的牧場與循環農業",
+        category: "農場／永續",
+        image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1000&q=80",
+        note: "從牛、森林、乳製品與土地復育，看見 Farm to Table 不只是口號，而是一條可以走的路。",
+        idea: "可轉成孩子的牧場角色任務與永續食農活動。"
+      },
+      {
+        date: "6/8",
+        title: "雞蛋品牌與地瓜學校",
+        category: "食材品牌／故事空間",
+        image: "https://images.unsplash.com/photo-1587486913049-53fc88980cfc?auto=format&fit=crop&w=1000&q=80",
+        note: "看一顆蛋、一條地瓜如何被重新包裝成品牌、體驗、手冊與故事場景。",
+        idea: "可轉成台灣地瓜、米、茶、蛋的美學食育活動。"
+      },
+      {
+        date: "6/9",
+        title: "食農泊的最後一站",
+        category: "農遊／住宿",
+        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80",
+        note: "整理住宿、農園、遊樂與餐飲如何變成一個完整的親子旅遊體驗。",
+        idea: "可作為滴滴兒森未來食農旅行與場域合作的參考。"
+      }
+    ];
+
+
+    const FAVORITE_BOOTHS = [
+      {
+        no: "A8",
+        official: "https://nippon-food-shift.maff.go.jp/",
+        name: "農林水產省｜NIPPON FOOD SHIFT",
+        tag: "公共倡議／食農轉譯",
+        summary: "從食物的角度重新思考日本，把農業、地方、生活與未來放在同一張餐桌上。",
+        why: "它把政策型內容轉成更年輕、更有視覺記憶點的語言，不只是推廣食物，而是在邀請大家一起重新理解食與農。",
+        points: ["觀察官方如何把食農議題說得親切", "看栃木縣飲食文化如何被包裝成地方魅力", "思考台灣味如何成為公共倡議"],
+        taiwan: "Hey Taiwan！從一口飯認識台灣：用米、醬油、辦桌、節氣食材說出台灣生活。"
+      },
+      {
+        no: "A13",
+        official: "https://www.meiji.co.jp/meiji-shokuiku/",
+        name: "栃木明治乳業｜明治の食育",
+        tag: "企業教材／牛奶食育",
+        summary: "把牛奶、營養與生活知識做成分齡教材，讓企業不只是銷售產品，也成為教育資源。",
+        why: "它讓我想觀察企業如何長期投入食育，並把品牌信任感建立在免費教材、講座與生活知識上。",
+        points: ["年齡分眾清楚", "教材與師資資源完整", "牛奶從產品變成生活學習入口"],
+        taiwan: "可轉成牛奶、米、蛋等在地食材的月曆式親子任務。"
+      },
+      {
+        no: "C2",
+        official: "https://agribatonproject.studio.site/",
+        name: "AGRI BATON PROJECT",
+        tag: "農業職業品牌／繪本",
+        summary: "用蔬菜蠟筆、圖書朗讀與繪本，讓孩子先喜歡農業，再慢慢理解食物的重要。",
+        why: "它不是在賣繪本或蠟筆而已，而是把農業的未來交棒給下一代，這個概念非常有力量。",
+        points: ["用美感改變農業第一印象", "將農業工作者變成故事主角", "用繪本、活動、教材串起孩子與土地"],
+        taiwan: "可發展台灣小農繪本、食材角色與孩子版職人故事。"
+      },
+      {
+        no: "B12",
+        official: "https://milk-tochigi.jp/",
+        name: "栃木縣牛乳普及協會",
+        tag: "地方乳業／月曆內容",
+        summary: "用牛奶見聞錄、食譜、繪畫與小知識，把地方牛奶變成日常中可以持續認識的題材。",
+        why: "它讓地方農產品不只停在賣場，而是變成每個月都能和大眾互動的內容 IP。",
+        points: ["地方乳業共同推廣", "每月小知識形成穩定接觸", "牛奶料理與活動結合"],
+        taiwan: "可轉成台灣食材月曆：每月一個食材、一道料理、一個親子小任務。"
+      },
+      {
+        no: "B13",
+        official: "https://www.pref.tochigi.lg.jp/c07/life/jyosei/jyosei/tomokaji.html",
+        name: "栃木縣生活文化體育部｜人權性別平等科",
+        tag: "家務分工／家庭食育",
+        summary: "從家務分擔與自己煮飯切入，讓食育不只談營養，也談家庭裡誰一起照顧生活。",
+        why: "這個角度很接近滴滴兒森想關心的家庭生活。孩子的餐桌教育，也包含大人如何分工與一起生活。",
+        points: ["料理連結性別平等", "食育延伸到家庭分工", "把家事包裝成輕鬆行動"],
+        taiwan: "可設計「今天我也是餐桌小隊員」家庭任務卡。"
+      },
+      {
+        no: "D3",
+        official: "https://ns-plus.co.jp/vegebouquet/",
+        name: "N’s Plus｜蔬菜花束 × 蔬菜創糸",
+        tag: "五感體驗／蔬菜美學",
+        summary: "先讓蔬菜變漂亮、變成禮物、變成可以觸摸與欣賞的體驗，再讓孩子重新靠近蔬菜。",
+        why: "它不是先叫孩子吃蔬菜，而是先讓人喜歡蔬菜。這正是生活美學食育很迷人的地方。",
+        points: ["蔬菜花束打開視覺吸引力", "五感體驗降低距離感", "把農產品變成禮物與體驗"],
+        taiwan: "可發展市場花束任務、節氣蔬果花束與餐桌花藝食育。"
+      },
+      {
+        no: "C12",
+        official: "https://mogumogu-town.jp/",
+        name: "Mogumogu Town｜大塚製藥",
+        tag: "AR遊戲／食材角色",
+        summary: "用 AR 讓餐點裡的食材角色出現，透過收集、問答與城鎮養成學習營養。",
+        why: "它把營養分類和食材知識變成孩子願意玩的遊戲，讓數位工具不只是螢幕，而是連回餐桌。",
+        points: ["拍餐點觸發食材角色", "用收集機制增加持續參與", "營養知識變成遊戲規則"],
+        taiwan: "可轉成食材小精靈圖鑑，先做紙本任務卡，再慢慢延伸數位互動。"
+      },
+      {
+        no: "E2",
+        official: "https://www.kagome.co.jp/",
+        name: "KAGOME｜每天吃 350g 蔬菜",
+        tag: "蔬菜推廣／健康行動",
+        summary: "把蔬菜攝取變成可以理解、可以測量、也可以在日常中被提醒的小目標。",
+        why: "它很會把健康目標說得簡單，讓「多吃蔬菜」不只是口號，而是具體行動。",
+        points: ["350g 蔬菜目標清楚", "健康議題轉成日常提醒", "大品牌資源可支持校園合作"],
+        taiwan: "可設計「今天我吃到幾種綠？」家庭蔬菜挑戰。"
+      },
+      {
+        no: "F15",
+        official: "https://www.gakkyu.or.jp/",
+        name: "學校給食研究改善協會",
+        tag: "學校午餐／校園食育",
+        summary: "把學校午餐視為食育入口，串起營養教師、食譜、教材與孩子每天都會遇見的一餐。",
+        why: "午餐不是單純供餐，而是每天發生的生活教育。這對未來校園食育模組很有參考價值。",
+        points: ["學校、家庭、社區一起合作", "午餐食譜可變成教學資源", "營養教師成為食育推手"],
+        taiwan: "可發展台灣午餐故事卡，讓孩子從便當與營養午餐認識產地。"
+      },
+      {
+        no: "I5",
+        official: "https://www.educe-shokuiku.jp/",
+        name: "日本 educe 食育總合研究所",
+        tag: "午餐大師／成人培訓",
+        summary: "用比賽、研修與教材讓學校午餐工作者被看見，也讓成人端更願意投入食育。",
+        why: "它提醒我，食育不只需要孩子喜歡，也需要老師、營養師與工作人員被支持。",
+        points: ["把午餐專業舞台化", "提供幼兒園與學校可實踐課程", "成人培訓是食育擴散關鍵"],
+        taiwan: "可作為滴滴兒森未來食育工作坊培訓與講師教材的參考。"
+      },
+      {
+        no: "K8／K9",
+        official: "https://www.meito.jp/",
+        name: "Mate／Mate World",
+        tag: "保育教材／食育小誌",
+        summary: "用月刊、繪本、保育圖書與食育情報誌，支持孩子享受用餐時光。",
+        why: "它很適合觀察日本如何把保育現場需要的內容，做成可長期使用、可訂閱的教材。",
+        points: ["內容形式接近兒森小誌", "插圖、食譜、活動指引可整合", "適合保育者與家庭閱讀"],
+        taiwan: "可轉成《兒森生活食育小誌》或季節型親子食育包。"
+      },
+      {
+        no: "F5",
+        official: "https://kids-kitchen.jp/",
+        name: "兒童廚房協會｜Kids Kitchen",
+        tag: "真實料理／幼兒食育",
+        summary: "讓孩子自己切、自己做、自己嘗試，從真實料理裡獲得對食物與生活的感覺。",
+        why: "它不是把料理變美勞，而是讓孩子真的參與生活。這一點非常適合滴滴兒森的課程精神。",
+        points: ["孩子親手操作", "五感與真實食材並重", "料理是生活能力，不只是活動成果"],
+        taiwan: "可發展「孩子自己的小廚房」系列，從安全刀具、豆類、米食與簡單料理開始。"
+      }
+    ];
+
+    const FALLBACK_DATA = [
+      {
+        booth_no: "F11",
+        booth_name: "農林水產省 食文化室／楽し味プロジェクト",
+        theme: "飲食文化",
+        interaction: "問答遊戲、展示",
+        highlight: "透過問答遊戲探索日本料理世界，把官方食文化推廣變得更親近。",
+        taiwan_idea: "可轉譯成「台灣味小學堂」：米食、醬油、辦桌、節氣食材的孩子版問答卡。",
+        link: ""
+      },
+      {
+        booth_no: "H1",
+        booth_name: "日本昆布協會",
+        theme: "飲食文化",
+        interaction: "高湯體驗、試吃",
+        highlight: "以昆布與高湯帶出海洋與陸地交會的和食文化。",
+        taiwan_idea: "可發展成「台灣湯底地圖」：昆布、柴魚、香菇、蔬菜湯底的五感比較。",
+        link: ""
+      },
+      {
+        booth_no: "F12 / F13",
+        booth_name: "日本醬油協會／栃木縣醬油產業協同組合",
+        theme: "飲食文化",
+        interaction: "五種醬油品嚐、專家課程展示",
+        highlight: "用味覺比較讓民眾理解傳統調味料的差異與文化價值。",
+        taiwan_idea: "可轉成「醬油偵探任務」：孩子聞、看、沾、嚐，找出不同醬油適合的料理。",
+        link: ""
+      },
+      {
+        booth_no: "F7",
+        booth_name: "兒童廚房協會",
+        theme: "兒童食育",
+        interaction: "採豆子錦標賽",
+        highlight: "用 30 秒小挑戰讓孩子練習手眼協調，也自然靠近食材。",
+        taiwan_idea: "可變成滴滴兒森的「小小豆豆手指任務」，搭配豆類文化與五感觀察。",
+        link: ""
+      },
+      {
+        booth_no: "C2",
+        booth_name: "AGRI BATON PROJECT",
+        theme: "五感體驗",
+        interaction: "蔬菜蠟筆、繪本閱讀、著色工作坊",
+        highlight: "把農業變成孩子可以畫、可以聽、可以參與的美感體驗。",
+        taiwan_idea: "可轉譯成「台灣蔬果色票」：用在地食材認識顏色、產地與季節。",
+        link: ""
+      },
+      {
+        booth_no: "D3",
+        booth_name: "N’s Plus 蔬菜花束® × 蔬菜刨絲®",
+        theme: "五感體驗",
+        interaction: "視覺、觸覺、味覺體驗",
+        highlight: "把蔬菜做成花束，讓食材美感先打開孩子與大人的心。",
+        taiwan_idea: "可發展成「市場花束採買任務」：親子一起用當季蔬菜設計餐桌花束。",
+        link: ""
+      }
+    ];
+
+    const cardsGrid = document.getElementById("cardsGrid");
+    const searchInput = document.getElementById("searchInput");
+    const loadSheetButton = document.getElementById("loadSheetButton");
+    const sampleButton = document.getElementById("sampleButton");
+    const typeFilter = document.getElementById("typeFilter");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const itineraryList = document.getElementById("itineraryList");
+    const journeyGrid = document.getElementById("journeyGrid");
+    const favoriteBoothGrid = document.getElementById("favoriteBoothGrid");
+
+    let records = [];
+
+    menuToggle.addEventListener("click", () => navLinks.classList.toggle("open"));
+    navLinks.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => navLinks.classList.remove("open")));
+
+    function getGoogleMapUrl(place) {
+      const query = place.query || place.name || "Japan";
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    }
+
+    function renderItinerary() {
+      itineraryList.innerHTML = ITINERARY.map((day) => `
+        <article class="timeline-item">
+          <div class="date-badge">${escapeHTML(day.date)}<br>${escapeHTML(day.day)}</div>
+          <div>
+            <h3>${escapeHTML(day.title)}</h3>
+            <p>${escapeHTML(day.desc)}</p>
+            <div class="place-links">
+              ${day.places.map((place) => `<a class="map-link" href="${escapeAttribute(getGoogleMapUrl(place))}" target="_blank" rel="noopener noreferrer">📍 ${escapeHTML(place.name)}</a>`).join("")}
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+
+    function renderFavoriteBooths() {
+      if (!favoriteBoothGrid) return;
+      favoriteBoothGrid.innerHTML = FAVORITE_BOOTHS.map((item, index) => `
+        <details class="favorite-card">
+          <summary>
+            <div class="favorite-summary-top">
+              <span class="tag ${tagClass(item.tag)}">${escapeHTML(item.tag)}</span>
+              <div class="favorite-summary-meta">
+                <span class="meta">${escapeHTML(item.no)}</span>
+                ${item.official ? `<a class="official-icon" href="${escapeAttribute(item.official)}" target="_blank" rel="noopener noreferrer" title="打開官方網站" aria-label="打開 ${escapeAttribute(item.name)} 官方網站" onclick="event.stopPropagation();">↗</a>` : ""}
+              </div>
+            </div>
+            <h3>${escapeHTML(item.name)}</h3>
+            <p>${escapeHTML(item.summary)}</p>
+            <span class="favorite-cta">打開亮點</span>
+          </summary>
+          <div class="favorite-detail">
+            <p><strong>為什麼吸引我：</strong>${escapeHTML(item.why)}</p>
+            <div>
+              <strong>我想觀察：</strong>
+              <ul class="favorite-list">
+                ${item.points.map((point) => `<li>${escapeHTML(point)}</li>`).join("")}
+              </ul>
+            </div>
+            <p><strong>滴滴兒森可以帶回台灣的是：</strong>${escapeHTML(item.taiwan)}</p>
+            ${item.official ? `<a class="mini-link" href="${escapeAttribute(item.official)}" target="_blank" rel="noopener noreferrer">↗ 官方網站</a>` : ""}
+          </div>
+        </details>
+      `).join("");
+    }
+
+    function renderJourneyNotes(data = JOURNEY_NOTES) {
+      journeyGrid.innerHTML = data.map((item) => `
+        <article class="journey-card">
+          <div class="journey-photo" style="background-image: linear-gradient(135deg, rgba(143,168,139,.28), rgba(217,123,67,.14)), url('${escapeAttribute(item.image)}');"></div>
+          <div class="journey-content">
+            <div class="journey-meta">${escapeHTML(item.date)}｜${escapeHTML(item.category)}</div>
+            <h3>${escapeHTML(item.title)}</h3>
+            <p style="white-space: pre-line;">${escapeHTML(item.note)}</p>
+            <p class="idea" style="margin-top:10px; color: var(--forest-dark); font-weight: 700;">帶回台灣：${escapeHTML(item.idea)}</p>
+            ${item.map ? `<div class="card-actions" style="margin-top:12px;"><a class="mini-link" href="${escapeAttribute(item.map)}" target="_blank" rel="noopener">📍 看地圖</a></div>` : ""}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function getSheetValue(item, candidates) {
+      const normalize = (value) => String(value || "")
+        .replace(/[\s\u3000\​]+/g, "")
+        .replace(/[()（）/／:：｜|]/g, "")
+        .toLowerCase();
+
+      for (const key of candidates) {
+        if (item[key] !== undefined && item[key] !== "") return item[key];
+      }
+
+      const normalizedEntries = Object.entries(item).map(([key, value]) => [normalize(key), value]);
+      for (const candidate of candidates) {
+        const normalizedCandidate = normalize(candidate);
+        const found = normalizedEntries.find(([key, value]) => value !== "" && (key === normalizedCandidate || key.includes(normalizedCandidate) || normalizedCandidate.includes(key)));
+        if (found) return found[1];
+      }
+
+      return "";
+    }
+
+    function normalizeJourneyRows(rows) {
+      return rows.map((item) => {
+        const observation = getSheetValue(item, ["當日主要觀察重點", "主要觀察重點", "觀察重點", "今日觀察", "觀察紀錄", "亮點紀錄", "最印象深刻的地方"]);
+        const value = getSheetValue(item, ["當天觀察成果的價值", "觀察成果的價值", "成果的價值", "觀察價值"]);
+        const taiwanIdea = getSheetValue(item, ["此觀察帶回台灣的具體靈感", "帶回台灣的具體靈感", "帶回台灣", "台灣轉譯靈感", "滴滴兒森可應用", "靈感"]);
+        const noteText = [observation, value].filter(Boolean).join("
+
+");
+
+        return {
+          date: getSheetValue(item, ["date", "日期", "見學日期", "時間戳", "時間戳記"]) || "未填日期",
+          title: getSheetValue(item, ["title", "標題", "地點/機構名稱", "地點機構名稱", "地點名稱", "今日見學地點", "參訪地點"]) || "未命名紀錄",
+          category: getSheetValue(item, ["category", "見學類型/主題", "見學類型主題", "類型", "分類", "地點類型"]) || "見學紀錄",
+          image: convertGoogleDriveImageUrl(getSheetValue(item, ["image", "上傳當日相關照片/影片", "上傳當日相關照片影片", "上傳當日相關照片", "照片", "照片連結", "圖片", "圖片連結"])) || "https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1000&q=80",
+          note: noteText || "今天的觀察還在慢慢整理中。",
+          idea: taiwanIdea || "這個靈感還在發芽中。",
+          map: getSheetValue(item, ["map", "地圖連結", "Google Map", "Google Map連結", "Google Maps"])
+        };
+      });
+    }
+
+    async function loadJourneyData() {
+      try {
+        const rawRows = await loadGoogleSheetRows(JOURNEY_SHEET_NAME);
+        const journeyRecords = normalizeJourneyRows(rawRows);
+        renderJourneyNotes(journeyRecords.length ? journeyRecords : JOURNEY_NOTES);
+      } catch (error) {
+        console.warn(error);
+        renderJourneyNotes(JOURNEY_NOTES);
+      }
+    }
+
+    async function loadAllSheetData() {
+      loadSheetButton.disabled = true;
+      loadSheetButton.textContent = "載入中...";
+      cardsGrid.innerHTML = `<div class="loading">正在整理森林裡的小種子資料...</div>`;
+
+      try {
+        await Promise.all([loadJourneyData(), loadData()]);
+      } finally {
+        loadSheetButton.disabled = false;
+        loadSheetButton.textContent = "重新載入最新紀錄";
+      }
+    }
+
+    function restoreSampleData() {
+      records = FALLBACK_DATA;
+      searchInput.value = "";
+      typeFilter.value = "全部";
+      renderCards();
+      renderJourneyNotes(JOURNEY_NOTES);
+      loadSheetButton.textContent = "載入最新紀錄";
+    }
+
+    function convertGoogleDriveImageUrl(url) {
+      if (!url) return "";
+      const text = String(url).trim();
+      const match = text.match(/\/d\/([a-zA-Z0-9_-]+)/) || text.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+      return text;
+    }
+
+    function loadGoogleSheetRows(sheetName) {
+      return new Promise((resolve, reject) => {
+        const callbackName = `sheetCallback_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+        const script = document.createElement("script");
+        const query = encodeURIComponent("select *");
+        const sheet = encodeURIComponent(sheetName);
+        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?sheet=${sheet}&tq=${query}&tqx=responseHandler:${callbackName}`;
+
+        window[callbackName] = (response) => {
+          try {
+            delete window[callbackName];
+            script.remove();
+
+            if (!response || response.status === "error") {
+              reject(new Error(response?.errors?.[0]?.detailed_message || "Google Sheet 回傳錯誤"));
+              return;
+            }
+
+            const table = response.table;
+            const headers = table.cols.map((col, index) => (col.label || `欄位${index + 1}`).trim());
+            const rows = table.rows.map((row) => {
+              const item = {};
+              headers.forEach((header, index) => {
+                const cell = row.c[index];
+                item[header] = cell ? (cell.f || cell.v || "") : "";
+              });
+              return item;
+            }).filter((item) => Object.values(item).some(Boolean));
+
+            resolve(rows);
+          } catch (error) {
+            reject(error);
+          }
+        };
+
+        script.onerror = () => {
+          delete window[callbackName];
+          script.remove();
+          reject(new Error("無法載入 Google Sheet，請確認試算表共用權限與分頁名稱。"));
+        };
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function normalizeSheetRows(rows) {
+      return rows.map((item) => {
+        return {
+          booth_no: item.booth_no || item["攤位編號"] || item["展位編號"] || item["區域編號"] || "未編號",
+          booth_name: item.booth_name || item["品牌/攤位"] || item["展位名稱"] || item["攤位名稱"] || item["單位名稱"] || "未命名展位",
+          theme: item.theme || item["主題類型"] || item["分類"] || "未分類",
+          interaction: item.interaction || item["互動方式"] || item["體驗方式"] || "尚未填寫",
+          highlight: item.highlight || item["✨ 一句話"] || item["一句話"] || item["最值得記錄"] || item["觀察亮點"] || item["亮點"] || "尚未整理觀察亮點。",
+          taiwan_idea: item.taiwan_idea || item["滴滴兒森可轉譯"] || item["台灣轉譯靈感"] || item["靈感一句話"] || item["📝 補充筆記 (space"] || item["📝 補充筆記（space"] || item["補充筆記"] || "尚未整理台灣靈感。",
+          link: item.link || item["📸 圖片網址 (白天留"] || item["圖片網址"] || item["照片網址"] || item["相關連結"] || item["網站"] || ""
+        };
+      });
+    }
+
+    function normalizeSheetData(csvText) {
+      const rows = parseCSV(csvText);
+      if (!rows.length) return [];
+
+      const headers = rows[0].map((h) => h.trim());
+      return rows.slice(1).filter((row) => row.some(Boolean)).map((row) => {
+        const item = {};
+        headers.forEach((header, index) => {
+          item[header] = row[index] || "";
+        });
+
+        return {
+          booth_no: item.booth_no || item["攤位編號"] || item["展位編號"] || item["區域編號"] || "未編號",
+          booth_name: item.booth_name || item["品牌/攤位"] || item["展位名稱"] || item["攤位名稱"] || item["單位名稱"] || "未命名展位",
+          theme: item.theme || item["主題類型"] || item["分類"] || "未分類",
+          interaction: item.interaction || item["互動方式"] || item["體驗方式"] || "尚未填寫",
+          highlight: item.highlight || item["✨ 一句話"] || item["一句話"] || item["最值得記錄"] || item["觀察亮點"] || item["亮點"] || "尚未整理觀察亮點。",
+          taiwan_idea: item.taiwan_idea || item["滴滴兒森可轉譯"] || item["台灣轉譯靈感"] || item["靈感一句話"] || item["📝 補充筆記 (space"] || item["📝 補充筆記（space"] || item["補充筆記"] || "尚未整理台灣靈感。",
+          link: item.link || item["📸 圖片網址 (白天留"] || item["圖片網址"] || item["照片網址"] || item["相關連結"] || item["網站"] || ""
+        };
+      });
+    }
+
+    async function loadData() {
+      try {
+        const rawRows = await loadGoogleSheetRows(BOOTH_SHEET_NAME);
+        records = normalizeSheetRows(rawRows);
+        if (!records.length) records = FALLBACK_DATA;
+        renderCards();
+      } catch (error) {
+        console.warn(error);
+        records = FALLBACK_DATA;
+        renderCards();
+      }
+    }
+
+    function tagClass(theme) {
+      if (theme.includes("文化")) return "orange";
+      if (theme.includes("兒童") || theme.includes("校園")) return "blue";
+      if (theme.includes("五感") || theme.includes("食材")) return "yellow";
+      return "";
+    }
+
+    function renderCards() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      const type = typeFilter.value;
+
+      const filtered = records.filter((item) => {
+        const text = Object.values(item).join(" ").toLowerCase();
+        const matchesKeyword = !keyword || text.includes(keyword);
+        const matchesType = type === "全部" || item.theme.includes(type);
+        return matchesKeyword && matchesType;
+      });
+
+      if (!filtered.length) {
+        cardsGrid.innerHTML = `<div class="empty">目前沒有符合條件的資料，小種子可能躲到落葉下面了。</div>`;
+        return;
+      }
+
+      cardsGrid.innerHTML = filtered.map((item) => `
+        <article class="data-card">
+          <div class="card-top">
+            <span class="tag ${tagClass(item.theme)}">${escapeHTML(item.theme)}</span>
+            <span class="meta">${escapeHTML(item.booth_no)}</span>
+          </div>
+          <h3>${escapeHTML(item.booth_name)}</h3>
+          <p><strong>互動方式：</strong>${escapeHTML(item.interaction)}</p>
+          <p>${escapeHTML(item.highlight)}</p>
+          <p class="idea">帶回台灣：${escapeHTML(item.taiwan_idea)}</p>
+          <div class="card-actions">
+            ${item.link ? `<a class="mini-link" href="${escapeAttribute(item.link)}" target="_blank" rel="noopener">延伸看看</a>` : ""}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttribute(value) {
+      return escapeHTML(value).replaceAll("`", "&#096;");
+    }
+
+    searchInput.addEventListener("input", renderCards);
+    typeFilter.addEventListener("change", renderCards);
+    loadSheetButton.addEventListener("click", loadAllSheetData);
+    sampleButton.addEventListener("click", restoreSampleData);
+
+    renderItinerary();
+    renderFavoriteBooths();
+    renderJourneyNotes(JOURNEY_NOTES);
+    records = FALLBACK_DATA;
+    renderCards();
+  </script>
+</body>
+</html>
