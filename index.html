@@ -1288,7 +1288,7 @@
           <div class="journey-content">
             <div class="journey-meta">${escapeHTML(item.date)}｜${escapeHTML(item.category)}</div>
             <h3>${escapeHTML(item.title)}</h3>
-            <p>${escapeHTML(item.note)}</p>
+            <p style="white-space: pre-line;">${escapeHTML(item.note)}</p>
             <p class="idea" style="margin-top:10px; color: var(--forest-dark); font-weight: 700;">帶回台灣：${escapeHTML(item.idea)}</p>
             ${item.map ? `<div class="card-actions" style="margin-top:12px;"><a class="mini-link" href="${escapeAttribute(item.map)}" target="_blank" rel="noopener">📍 看地圖</a></div>` : ""}
           </div>
@@ -1296,16 +1296,43 @@
       `).join("");
     }
 
+    function getSheetValue(item, candidates) {
+      const normalize = (value) => String(value || "")
+        .replace(/[\s\u3000\​]+/g, "")
+        .replace(/[()（）/／:：｜|]/g, "")
+        .toLowerCase();
+
+      for (const key of candidates) {
+        if (item[key] !== undefined && item[key] !== "") return item[key];
+      }
+
+      const normalizedEntries = Object.entries(item).map(([key, value]) => [normalize(key), value]);
+      for (const candidate of candidates) {
+        const normalizedCandidate = normalize(candidate);
+        const found = normalizedEntries.find(([key, value]) => value !== "" && (key === normalizedCandidate || key.includes(normalizedCandidate) || normalizedCandidate.includes(key)));
+        if (found) return found[1];
+      }
+
+      return "";
+    }
+
     function normalizeJourneyRows(rows) {
       return rows.map((item) => {
+        const observation = getSheetValue(item, ["當日主要觀察重點", "主要觀察重點", "觀察重點", "今日觀察", "觀察紀錄", "亮點紀錄", "最印象深刻的地方"]);
+        const value = getSheetValue(item, ["當天觀察成果的價值", "觀察成果的價值", "成果的價值", "觀察價值"]);
+        const taiwanIdea = getSheetValue(item, ["此觀察帶回台灣的具體靈感", "帶回台灣的具體靈感", "帶回台灣", "台灣轉譯靈感", "滴滴兒森可應用", "靈感"]);
+        const noteText = [observation, value].filter(Boolean).join("
+
+");
+
         return {
-          date: item.date || item["日期"] || item["見學日期"] || item["時間戳"] || item["時間戳記"] || "未填日期",
-          title: item.title || item["標題"] || item["地點/機構名稱"] || item["地點名稱"] || item["今日見學地點"] || item["參訪地點"] || "未命名紀錄",
-          category: item.category || item["見學類型/主題"] || item["類型"] || item["分類"] || item["地點類型"] || "見學紀錄",
-          image: convertGoogleDriveImageUrl(item.image || item["上傳當日相關照片/影片"] || item["上傳當日相關照片"] || item["照片"] || item["照片連結"] || item["圖片"] || item["圖片連結"] || "") || "https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1000&q=80",
-          note: item.note || item["當日主要觀察重點"] || item["觀察紀錄"] || item["今日觀察"] || item["亮點紀錄"] || item["最印象深刻的地方"] || "今天的觀察還在慢慢整理中。",
-          idea: item.idea || item["此觀察帶回台灣的具體靈感"] || item["當天觀察成果的價值"] || item["帶回台灣"] || item["台灣轉譯靈感"] || item["滴滴兒森可應用"] || item["靈感"] || "這個靈感還在發芽中。",
-          map: item.map || item["地圖連結"] || item["Google Map"] || item["Google Map連結"] || ""
+          date: getSheetValue(item, ["date", "日期", "見學日期", "時間戳", "時間戳記"]) || "未填日期",
+          title: getSheetValue(item, ["title", "標題", "地點/機構名稱", "地點機構名稱", "地點名稱", "今日見學地點", "參訪地點"]) || "未命名紀錄",
+          category: getSheetValue(item, ["category", "見學類型/主題", "見學類型主題", "類型", "分類", "地點類型"]) || "見學紀錄",
+          image: convertGoogleDriveImageUrl(getSheetValue(item, ["image", "上傳當日相關照片/影片", "上傳當日相關照片影片", "上傳當日相關照片", "照片", "照片連結", "圖片", "圖片連結"])) || "https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1000&q=80",
+          note: noteText || "今天的觀察還在慢慢整理中。",
+          idea: taiwanIdea || "這個靈感還在發芽中。",
+          map: getSheetValue(item, ["map", "地圖連結", "Google Map", "Google Map連結", "Google Maps"])
         };
       });
     }
