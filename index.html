@@ -1320,10 +1320,8 @@
       return rows.map((item) => {
         const observation = getSheetValue(item, ["當日主要觀察重點", "主要觀察重點", "觀察重點", "今日觀察", "觀察紀錄", "亮點紀錄", "最印象深刻的地方"]);
         const value = getSheetValue(item, ["當天觀察成果的價值", "觀察成果的價值", "成果的價值", "觀察價值"]);
-        const taiwanIdea = getSheetValue(item, ["此觀察帶回台灣的具體靈感", "帶回台灣的具體靈感", "帶回台灣", "台灣轉譯靈感", "滴滴兒森可應用", "靈感"]);
-        const noteText = [observation, value].filter(Boolean).join("
-
-");
+        const taiwanIdea = getSheetValue(item, ["此觀察帶回台灣的具體啟發或靈感", "此觀察帶回台灣的具體靈感", "帶回台灣的具體靈感", "帶回台灣", "台灣轉譯靈感", "滴滴兒森可應用", "靈感"]);
+        const noteText = [observation, value].filter(Boolean).join("\n\n");
 
         return {
           date: getSheetValue(item, ["date", "日期", "見學日期", "時間戳", "時間戳記"]) || "未填日期",
