@@ -114,6 +114,13 @@
 
     .nav-links a:hover { background: rgba(143, 168, 139, 0.16); }
 
+    .nav-load-button {
+      min-height: 38px;
+      padding: 8px 14px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
     .menu-toggle {
       display: none;
       border: 1px solid var(--line);
@@ -694,6 +701,7 @@
         align-items: stretch;
       }
       .nav-links.open { display: flex; }
+      .nav-load-button { display: inline-flex; }
       .menu-toggle { display: inline-flex; }
     }
 
@@ -707,6 +715,7 @@
       .search-input, .select-input { min-width: 100%; width: 100%; }
       .hero-actions { align-items: stretch; }
       .btn { width: 100%; }
+      .nav-load-button { width: auto; }
     }
   </style>
 </head>
@@ -716,6 +725,7 @@
       <a class="brand" href="#top" aria-label="回到首頁">
         <span>滴滴兒森｜the Drippy Forest</span>
       </a>
+      <button class="btn btn-primary nav-load-button" id="topLoadSheetButton" type="button">載入最新資料</button>
       <button class="menu-toggle" id="menuToggle" type="button">選單</button>
       <div class="nav-links" id="navLinks">
         <a href="#research">旅程重點</a>
@@ -914,6 +924,8 @@
     const SPREADSHEET_ID = "189eMmdngt401K0sCunUoc3WozyQEwivLyh80_ETb_WI";
     const BOOTH_SHEET_NAME = "大會攤位";
     const JOURNEY_SHEET_NAME = "每日見學紀錄";
+    const BOOTH_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7C5BLAyC1mQhQ3lnBYqPIMo7Ss8wKolJwCpHRcXO6R7MrzpFEtVNEWFB-MqRztWJ1vUeMCasPThzO/pub?gid=1408397788&single=true&output=csv";
+    const JOURNEY_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7C5BLAyC1mQhQ3lnBYqPIMo7Ss8wKolJwCpHRcXO6R7MrzpFEtVNEWFB-MqRztWJ1vUeMCasPThzO/pub?gid=1679546387&single=true&output=csv";
 
     const ITINERARY = [
       {
@@ -1216,6 +1228,7 @@
     const cardsGrid = document.getElementById("cardsGrid");
     const searchInput = document.getElementById("searchInput");
     const loadSheetButton = document.getElementById("loadSheetButton");
+    const topLoadSheetButton = document.getElementById("topLoadSheetButton");
     const sampleButton = document.getElementById("sampleButton");
     const typeFilter = document.getElementById("typeFilter");
     const menuToggle = document.getElementById("menuToggle");
@@ -1296,20 +1309,25 @@
       `).join("");
     }
 
-    function getSheetValue(item, candidates) {
-      const normalize = (value) => String(value || "")
-        .replace(/[\s\u3000\​]+/g, "")
-        .replace(/[()（）/／:：｜|]/g, "")
+    function normalizeKey(value) {
+      return String(value || "")
+        .replace(/[\s\u3000\u200B-\u200D\uFEFF]+/g, "")
+        .replace(/[()（）/／:：｜|?？,，.。!！「」『』"'\[\]【】]/g, "")
         .toLowerCase();
+    }
 
+    function getSheetValue(item, candidates) {
       for (const key of candidates) {
         if (item[key] !== undefined && item[key] !== "") return item[key];
       }
 
-      const normalizedEntries = Object.entries(item).map(([key, value]) => [normalize(key), value]);
+      const normalizedEntries = Object.entries(item).map(([key, value]) => [normalizeKey(key), value]);
       for (const candidate of candidates) {
-        const normalizedCandidate = normalize(candidate);
-        const found = normalizedEntries.find(([key, value]) => value !== "" && (key === normalizedCandidate || key.includes(normalizedCandidate) || normalizedCandidate.includes(key)));
+        const normalizedCandidate = normalizeKey(candidate);
+        const found = normalizedEntries.find(([key, value]) => {
+          if (value === undefined || value === null || value === "") return false;
+          return key === normalizedCandidate || key.includes(normalizedCandidate) || normalizedCandidate.includes(key);
+        });
         if (found) return found[1];
       }
 
@@ -1317,27 +1335,40 @@
     }
 
     function normalizeJourneyRows(rows) {
-      return rows.map((item) => {
-        const observation = getSheetValue(item, ["當日主要觀察重點", "主要觀察重點", "觀察重點", "今日觀察", "觀察紀錄", "亮點紀錄", "最印象深刻的地方"]);
-        const value = getSheetValue(item, ["當天觀察成果的價值", "觀察成果的價值", "成果的價值", "觀察價值"]);
-        const taiwanIdea = getSheetValue(item, ["此觀察帶回台灣的具體啟發或靈感", "此觀察帶回台灣的具體靈感", "帶回台灣的具體靈感", "帶回台灣", "台灣轉譯靈感", "滴滴兒森可應用", "靈感"]);
-        const noteText = [observation, value].filter(Boolean).join("\n\n");
+      return rows
+        .filter((item) => {
+          const title = getSheetValue(item, ["地點/機構名稱", "地點機構名稱", "地點名稱", "今日見學地點", "參訪地點", "location", "title"]);
+          const observation = getSheetValue(item, ["當日主要觀察重點與詳情記錄", "當日主要觀察重點", "主要觀察重點", "觀察重點", "今日觀察", "觀察紀錄", "亮點紀錄", "最印象深刻的地方"]);
+          return Boolean(title || observation);
+        })
+        .map((item) => {
+          const observation = getSheetValue(item, ["當日主要觀察重點與詳情記錄", "當日主要觀察重點", "主要觀察重點", "觀察重點", "今日觀察", "觀察紀錄", "亮點紀錄", "最印象深刻的地方"]);
+          const value = getSheetValue(item, ["當天觀察成果的價值評估", "當天觀察成果的價值", "觀察成果的價值", "成果的價值", "觀察價值"]);
+          const taiwanIdea = getSheetValue(item, ["此觀察帶回台灣的具體啟發或靈感是什麼", "此觀察帶回台灣的具體啟發或靈感", "此觀察帶回台灣的具體靈感", "帶回台灣的具體靈感", "帶回台灣", "台灣轉譯靈感", "滴滴兒森可應用", "靈感"]);
+          const valueText = value && !/^\d+(\.\d+)?$/.test(String(value).trim()) ? `觀察價值：${value}` : "";
+          const noteText = [observation, valueText].filter(Boolean).join("\n\n");
 
-        return {
-          date: getSheetValue(item, ["date", "日期", "見學日期", "時間戳", "時間戳記"]) || "未填日期",
-          title: getSheetValue(item, ["title", "標題", "地點/機構名稱", "地點機構名稱", "地點名稱", "今日見學地點", "參訪地點"]) || "未命名紀錄",
-          category: getSheetValue(item, ["category", "見學類型/主題", "見學類型主題", "類型", "分類", "地點類型"]) || "見學紀錄",
-          image: convertGoogleDriveImageUrl(getSheetValue(item, ["image", "上傳當日相關照片/影片", "上傳當日相關照片影片", "上傳當日相關照片", "照片", "照片連結", "圖片", "圖片連結"])) || "https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1000&q=80",
-          note: noteText || "今天的觀察還在慢慢整理中。",
-          idea: taiwanIdea || "這個靈感還在發芽中。",
-          map: getSheetValue(item, ["map", "地圖連結", "Google Map", "Google Map連結", "Google Maps"])
-        };
-      });
+          return {
+            date: getSheetValue(item, ["date", "日期", "見學日期", "時間戳", "時間戳記"]) || "未填日期",
+            title: getSheetValue(item, ["title", "標題", "地點/機構名稱", "地點機構名稱", "地點名稱", "今日見學地點", "參訪地點"]) || "未命名紀錄",
+            category: getSheetValue(item, ["category", "見學類型/主題", "見學類型主題", "類型", "分類", "地點類型"]) || "見學紀錄",
+            image: convertGoogleDriveImageUrl(getSheetValue(item, ["image", "上傳當日相關照片/文件", "上傳當日相關照片/影片", "上傳當日相關照片文件", "上傳當日相關照片影片", "上傳當日相關照片", "照片", "照片連結", "圖片", "圖片連結"])) || "https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1000&q=80",
+            note: noteText || "今天的觀察還在慢慢整理中。",
+            idea: taiwanIdea || "這個靈感還在發芽中。",
+            map: getSheetValue(item, ["map", "地圖連結", "Google Map", "Google Map連結", "Google Maps"])
+          };
+        });
     }
 
     async function loadJourneyData() {
       try {
-        const rawRows = await loadGoogleSheetRows(JOURNEY_SHEET_NAME);
+        let rawRows = [];
+        try {
+          rawRows = await loadGoogleSheetRows(JOURNEY_SHEET_NAME);
+        } catch (gvizError) {
+          console.warn("GViz 讀取每日見學紀錄失敗，改用 CSV。", gvizError);
+          rawRows = await loadCsvRows(JOURNEY_CSV_URL);
+        }
         const journeyRecords = normalizeJourneyRows(rawRows);
         renderJourneyNotes(journeyRecords.length ? journeyRecords : JOURNEY_NOTES);
       } catch (error) {
@@ -1348,14 +1379,18 @@
 
     async function loadAllSheetData() {
       loadSheetButton.disabled = true;
+      topLoadSheetButton.disabled = true;
       loadSheetButton.textContent = "載入中...";
+      topLoadSheetButton.textContent = "載入中...";
       cardsGrid.innerHTML = `<div class="loading">正在整理森林裡的小種子資料...</div>`;
 
       try {
         await Promise.all([loadJourneyData(), loadData()]);
       } finally {
         loadSheetButton.disabled = false;
+        topLoadSheetButton.disabled = false;
         loadSheetButton.textContent = "重新載入最新紀錄";
+        topLoadSheetButton.textContent = "載入最新資料";
       }
     }
 
@@ -1366,14 +1401,77 @@
       renderCards();
       renderJourneyNotes(JOURNEY_NOTES);
       loadSheetButton.textContent = "載入最新紀錄";
+      topLoadSheetButton.textContent = "載入最新資料";
     }
 
     function convertGoogleDriveImageUrl(url) {
       if (!url) return "";
       const text = String(url).trim();
-      const match = text.match(/\/d\/([a-zA-Z0-9_-]+)/) || text.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
-      return text;
+      const firstUrl = (text.match(/https?:\/\/[^\s,]+/) || [text])[0];
+      const match = firstUrl.match(/\/d\/([a-zA-Z0-9_-]+)/) || firstUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
+      return firstUrl;
+    }
+
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let insideQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"' && insideQuotes && nextChar === '"') {
+          value += '"';
+          i++;
+        } else if (char === '"') {
+          insideQuotes = !insideQuotes;
+        } else if (char === "," && !insideQuotes) {
+          row.push(value.trim());
+          value = "";
+        } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+          if (value || row.length) {
+            row.push(value.trim());
+            rows.push(row);
+            row = [];
+            value = "";
+          }
+          if (char === "\r" && nextChar === "\n") i++;
+        } else {
+          value += char;
+        }
+      }
+
+      if (value || row.length) {
+        row.push(value.trim());
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    async function loadCsvRows(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error("CSV 讀取失敗");
+      const text = await response.text();
+      const parsed = parseCSV(text).filter((row) => row.some(Boolean));
+      if (!parsed.length) return [];
+      const headers = parsed[0].map((header, index) => cleanHeader(header, index));
+      return parsed.slice(1).map((row) => {
+        const item = {};
+        headers.forEach((header, index) => {
+          item[header] = row[index] || "";
+        });
+        return item;
+      }).filter((item) => Object.values(item).some(Boolean));
+    }
+
+    function cleanHeader(value, index) {
+      const text = String(value || "").trim();
+      return text || `欄位${index + 1}`;
     }
 
     function loadGoogleSheetRows(sheetName) {
@@ -1382,7 +1480,7 @@
         const script = document.createElement("script");
         const query = encodeURIComponent("select *");
         const sheet = encodeURIComponent(sheetName);
-        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?sheet=${sheet}&tq=${query}&tqx=responseHandler:${callbackName}`;
+        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?sheet=${sheet}&headers=1&tq=${query}&tqx=responseHandler:${callbackName}`;
 
         window[callbackName] = (response) => {
           try {
@@ -1395,16 +1493,27 @@
             }
 
             const table = response.table;
-            const headers = table.cols.map((col, index) => (col.label || `欄位${index + 1}`).trim());
-            const rows = table.rows.map((row) => {
+            let headers = table.cols.map((col, index) => cleanHeader(col.label, index));
+            let valueRows = table.rows.map((row) => table.cols.map((_, index) => {
+              const cell = row.c[index];
+              return cell ? (cell.f || cell.v || "") : "";
+            })).filter((row) => row.some(Boolean));
+
+            const meaningfulHeaderCount = headers.filter((header) => header && !/^欄位\d+$/.test(header) && !/^[A-Z]+$/.test(header)).length;
+            if (meaningfulHeaderCount < 3 && valueRows.length > 1) {
+              headers = valueRows[0].map((value, index) => cleanHeader(value, index));
+              valueRows = valueRows.slice(1);
+            }
+
+            const rows = valueRows.map((row) => {
               const item = {};
               headers.forEach((header, index) => {
-                const cell = row.c[index];
-                item[header] = cell ? (cell.f || cell.v || "") : "";
+                item[header] = row[index] || "";
               });
               return item;
             }).filter((item) => Object.values(item).some(Boolean));
 
+            console.info(`已讀取 ${sheetName}`, headers, rows);
             resolve(rows);
           } catch (error) {
             reject(error);
@@ -1422,17 +1531,23 @@
     }
 
     function normalizeSheetRows(rows) {
-      return rows.map((item) => {
-        return {
-          booth_no: item.booth_no || item["攤位編號"] || item["展位編號"] || item["區域編號"] || "未編號",
-          booth_name: item.booth_name || item["品牌/攤位"] || item["展位名稱"] || item["攤位名稱"] || item["單位名稱"] || "未命名展位",
-          theme: item.theme || item["主題類型"] || item["分類"] || "未分類",
-          interaction: item.interaction || item["互動方式"] || item["體驗方式"] || "尚未填寫",
-          highlight: item.highlight || item["✨ 一句話"] || item["一句話"] || item["最值得記錄"] || item["觀察亮點"] || item["亮點"] || "尚未整理觀察亮點。",
-          taiwan_idea: item.taiwan_idea || item["滴滴兒森可轉譯"] || item["台灣轉譯靈感"] || item["靈感一句話"] || item["📝 補充筆記 (space"] || item["📝 補充筆記（space"] || item["補充筆記"] || "尚未整理台灣靈感。",
-          link: item.link || item["📸 圖片網址 (白天留"] || item["圖片網址"] || item["照片網址"] || item["相關連結"] || item["網站"] || ""
-        };
-      });
+      return rows
+        .filter((item) => {
+          const name = getSheetValue(item, ["品牌/攤位名稱", "品牌/攤位", "攤位名稱", "展位名稱", "單位名稱"]);
+          const no = getSheetValue(item, ["攤位編號", "攤位編號例A12", "展位編號", "區域編號"]);
+          return Boolean(name || no);
+        })
+        .map((item) => {
+          return {
+            booth_no: getSheetValue(item, ["booth_no", "攤位編號", "攤位編號例A12", "展位編號", "區域編號"]) || "未編號",
+            booth_name: getSheetValue(item, ["booth_name", "品牌/攤位名稱", "品牌攤位名稱", "品牌/攤位", "展位名稱", "攤位名稱", "單位名稱"]) || "未命名展位",
+            theme: getSheetValue(item, ["theme", "主題類型", "分類"]) || "未分類",
+            interaction: getSheetValue(item, ["interaction", "互動方式", "體驗方式"]) || "尚未填寫",
+            highlight: getSheetValue(item, ["highlight", "✨ 一句話亮點", "一句話亮點", "✨ 一句話", "一句話", "最值得記錄", "觀察亮點", "亮點"]) || "尚未整理觀察亮點。",
+            taiwan_idea: getSheetValue(item, ["taiwan_idea", "滴滴兒森可轉譯", "台灣轉譯靈感", "靈感一句話", "📝 補充筆記", "補充筆記"]) || "尚未整理台灣靈感。",
+            link: getSheetValue(item, ["link", "📸 圖片網址", "圖片網址", "照片網址", "相關連結", "網站"]) || ""
+          };
+        });
     }
 
     function normalizeSheetData(csvText) {
@@ -1460,7 +1575,13 @@
 
     async function loadData() {
       try {
-        const rawRows = await loadGoogleSheetRows(BOOTH_SHEET_NAME);
+        let rawRows = [];
+        try {
+          rawRows = await loadGoogleSheetRows(BOOTH_SHEET_NAME);
+        } catch (gvizError) {
+          console.warn("GViz 讀取大會攤位失敗，改用 CSV。", gvizError);
+          rawRows = await loadCsvRows(BOOTH_CSV_URL);
+        }
         records = normalizeSheetRows(rawRows);
         if (!records.length) records = FALLBACK_DATA;
         renderCards();
@@ -1527,6 +1648,7 @@
     searchInput.addEventListener("input", renderCards);
     typeFilter.addEventListener("change", renderCards);
     loadSheetButton.addEventListener("click", loadAllSheetData);
+    topLoadSheetButton.addEventListener("click", loadAllSheetData);
     sampleButton.addEventListener("click", restoreSampleData);
 
     renderItinerary();
